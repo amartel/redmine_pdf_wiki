@@ -1,0 +1,11 @@
+This will allow you to use configure WKHTMLTOPDF for REDMINE.
+
+<p><label>Command line: </label>
+<%= text_field_tag 'settings[wtp_command]', @settings['wtp_command'], :size => 100 %><br />
+<em>Options to use for wkhtmltopdf</em>
+</p>
+
+<p><label>Temp dir: </label>
+<%= text_field_tag 'settings[wtp_tmpdir]', @settings['wtp_tmpdir'], :size => 100 %><br />
+<em>Tempdir where .pdf files will be generated. Must be cleaned by crontab...</em>
+</p>

@@ -1,0 +1,69 @@
+h1. Introduction
+
+This plugin allows to export WIKI page(s) to .PDF file using WKHTML2PDF
+
+h1. Setup
+
+h3. 1. Install wkhtml2pdf
+
+via pdfkit:
+* gem install pdfkit
+* pdfkit --install-wkhtmltopdf
+
+Directly from wkhtml2pdf website
+* http://code.google.com/p/wkhtmltopdf/downloads/list
+
+h3. 2. Install plugin
+
+Install redmine_pdf_wiki with:
+* cd <redmine directory>/vendor/plugins
+* tar xvzf redmine_pdf_wiki.tgz
+
+No DB migration is required...
+
+h3. 3. Patch REDMINE to add link 'Export PDF'
+
+Edit <redmine directory>/app/view/wiki/show.rhtml:
+<pre>
+	<%= f.link_to 'HTML', :url => {:page => @page.title, :version => @content.version} %>
+	<%= f.link_to 'TXT', :url => {:page => @page.title, :version => @content.version} %>
+</pre>
+should be
+<pre>
+	<%= f.link_to 'HTML', :url => {:page => @page.title, :version => @content.version} %>
+	<%= f.link_to 'TXT', :url => {:page => @page.title, :version => @content.version} %>
+	<%= f.link_to('PDF', :url => {:controller => 'wikitopdf', :action => 'export', :page => @page.title, :id => @project}) %>
+</pre>
+
+Then edit <redmine directory>/app/view/wiki/special_page_index.rhtml:
+<pre>
+	<%= f.link_to 'Atom', :url => {:controller => 'projects', :action => 'activity', :id => @project, :show_wiki_edits => 1, :key => User.current.rss_key} %>
+	<%= f.link_to('HTML', :url => {:action => 'special', :page => 'export'}) if User.current.allowed_to?(:export_wiki_pages, @project) %>
+</pre>
+should be
+<pre>
+	<%= f.link_to 'Atom', :url => {:controller => 'projects', :action => 'activity', :id => @project, :show_wiki_edits => 1, :key => User.current.rss_key} %>
+	<%= f.link_to('HTML', :url => {:action => 'special', :page => 'export'}) if User.current.allowed_to?(:export_wiki_pages, @project) %>
+	<%= f.link_to('PDF', :url => {:controller => 'wikitopdf', :action => 'export', :id => @project}) if User.current.allowed_to?(:export_wiki_pages, @project) %>
+</pre>
+
+h3. 4
+
+If you are using Apache + Passenger, you have to change passenger settings to add:
+* PassengerUseGlobalQueue on
+
+If you are using another web server configuration, you may have to configure something to allow a web request to recursively call your web server (if you have a blank page that takes an infinite time to be loaded...)  
+
+h3. 5. Restart your web server
+
+
+h3. 6. Configure REDMINE with your web browser
+
+If everything is OK, you should see WikiToPdf plugin plugin in the plugin list (Administration -> Plugins)
+Then, you have to configure the plugin:
+* command line to run wkhtmltopdf (default value should be OK in most cases)
+* temporary directory where .pdf files will be generated. You should clean it periodicaly (using crontab, for example)
+
+h1. History
+
+0.0.1: Initial release
