@@ -1,2 +1,5 @@
+0.0.2 : 2011-06-09
+Don't use anymore the command line to specify wiki pages (there was a 4Ko limit) 
+
 0.0.1 : 2010-09-16
 Initial release

@@ -33,8 +33,11 @@ class WikitopdfController < ApplicationController
     t = Time.now.strftime("%d")
     pdfname = "#{Setting.plugin_redmine_pdf_wiki['wtp_tmpdir']}/#{t}#{rand(0x100000000).to_s(36)}.pdf"
     node = @page.nil? ? nil : @page.id
-    args = Setting.plugin_redmine_pdf_wiki['wtp_command'].split(' ')
-    args << '--quiet'
+    #args = Setting.plugin_redmine_pdf_wiki['wtp_command'].split(' ')
+    #args << '--quiet'
+
+    args = [ '--quiet' ]
+
     flg=false
     if request.headers['Cookie']
       flg=true
@@ -56,7 +59,14 @@ class WikitopdfController < ApplicationController
     end
     args += pdf_page_hierarchy(@pages_by_parent_id, node)
     args << pdfname
-    `#{args.join(' ')}`
+
+    cmdname = "#{Setting.plugin_redmine_pdf_wiki['wtp_tmpdir']}/#{t}#{rand(0x100000000).to_s(36)}.txt"
+    File.open(cmdname, "w") do |f|
+      f.write(args.join(' '))
+    end
+
+#    `#{args.join(' ')}`
+    `#{Setting.plugin_redmine_pdf_wiki['wtp_command']} --read-args-from-stdin < #{cmdname}`
     send_file pdfname, :filename => "export.pdf",
                                  :type => 'application/pdf',
                                  :disposition => 'inline'
