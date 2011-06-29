@@ -6,11 +6,7 @@ h1. Setup
 
 h3. 1. Install wkhtml2pdf
 
-via pdfkit:
-* gem install pdfkit
-* pdfkit --install-wkhtmltopdf
-
-Directly from wkhtml2pdf website
+From wkhtml2pdf website
 * http://code.google.com/p/wkhtmltopdf/downloads/list
 
 h3. 2. Install plugin
@@ -66,4 +62,4 @@ Then, you have to configure the plugin:
 
 h1. History
 
-0.0.1: Initial release
+see changelog

@@ -1,3 +1,8 @@
+0.0.3 : 2011-06-29
+Add de locale
+remove unused lib directory
+update default command line used to run wkhtmltopdf
+
 0.0.2 : 2011-06-09
 Don't use anymore the command line to specify wiki pages (there was a 4Ko limit) 
 
