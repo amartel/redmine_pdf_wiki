@@ -102,6 +102,9 @@ module Wikitopdf
   module PDFPatch
     
     def self.included(base)
+      base.class_eval do
+        unloadable
+      end
       base.send(:include, ModuleMethods)
     end
   

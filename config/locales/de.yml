@@ -1,2 +1,4 @@
 de:
   label_wtp_setting: Kommandozeile
+  description_wtp_setting: Options to use for wkhtmltopdf  
+  greeting: This will allow you to use configure WKHTMLTOPDF for REDMINE.

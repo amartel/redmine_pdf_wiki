@@ -1,6 +1,6 @@
-This will allow you to use configure WKHTMLTOPDF for REDMINE.
+<%=t :greeting %>
 
-<p><label>Command line: </label>
+<p><label><%=t :label_wtp_setting %>: </label>
 <%= text_field_tag 'settings[wtp_command]', @settings['wtp_command'], :size => 100 %><br />
-<em>Options to use for wkhtmltopdf</em>
+<em><%=t :description_wtp_setting %></em>
 </p>

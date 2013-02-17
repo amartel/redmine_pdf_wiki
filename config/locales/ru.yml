@@ -1,0 +1,5 @@
+# Russian strings go
+ru:
+  label_wtp_setting: Командная строка
+  description_wtp_setting: Опции для передачи в wkhtmltopdf
+  greeting: Плагин позволяет сконфигурировать WKHTMLTOPDF для REDMINE.
