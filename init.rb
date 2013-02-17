@@ -9,3 +9,8 @@ Redmine::Plugin.register :redmine_pdf_wiki do
 
   settings :default => {'wtp_command' => "/usr/local/bin/wkhtmltopdf --print-media-type --no-outline  --disable-external-links --disable-internal-links -n --output-format pdf --load-error-handling ignore --user-style-sheet #{File.join(File.dirname(__FILE__), 'pdf.css')}"}, :partial => 'settings/wtp_settings'
 end
+
+require 'wikitopdf'
+ActionDispatch::Callbacks.to_prepare do
+  WikiController.send(:include, Wikitopdf::PDFPatch)
+end
