@@ -92,7 +92,7 @@ module Wikitopdf
       begin
         File.unlink filename
       rescue => e
-        Rails.logger.warn("Cannot unlink temp file " + filename) if logger && logger.debug?
+        Rails.logger.warn("Cannot unlink temp file " + filename) if Rails.logger && Rails.logger.debug?
       end
     end
     
@@ -111,7 +111,7 @@ module Wikitopdf
     module ModuleMethods
       # Patched WikiController method, returns PDF body
       def wiki_page_to_pdf(page, project)
-        Rails.logger.debug("Invoked patched wiki_page_to_pdf") if logger && logger.debug?
+        Rails.logger.debug("Invoked patched wiki_page_to_pdf") if Rails.logger && Rails.logger.debug?
         pdf_export = Wikitopdf::PdfExport.new(page, project, self)
         pdf_export.export
       end
