@@ -115,6 +115,11 @@ module Wikitopdf
         pdf_export = Wikitopdf::PdfExport.new(page, project, self)
         pdf_export.export
       end
+      def wiki_pages_to_pdf(pages, project)
+        Rails.logger.debug("Invoked patched wiki_pages_to_pdf") if Rails.logger && Rails.logger.debug?
+        pdf_export = Wikitopdf::PdfExport.new(nil, project, self)
+        pdf_export.export
+      end
     end
   end
         
